@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BARYONIX — Gymwear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #090a08;
+      --muted: #a0a397;
+      --paper: #10120f;
+      --white: #171914;
+      --line: #34382f;
+      --sage: #4b5540;
+      --green: #c6dc55;
+      --accent: #d2ed42;
+      --radius: 10px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(210,237,66,.035), transparent 26%),
+        linear-gradient(135deg, #0d0f0c 0%, #11130f 100%);
+      color: #f3f4ed;
+      font-family: "DM Sans", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .announcement {
+      background: var(--ink);
+      color: var(--accent);
+      text-align: center;
+      font-family: "Oswald", sans-serif;
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 10px 16px;
+    }
+
+    header {
+      height: 96px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1280px;
+      margin: auto;
+      padding: 0 32px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .brand img {
+      display: block;
+      height: 78px;
+      width: auto;
+      max-width: 300px;
+      object-fit: contain;
+    }
+    nav { display: flex; gap: 30px; }
+    nav a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      background: transparent;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      position: relative;
+    }
+    .icon-btn:hover { background: #252820; }
+    .cart-count {
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      border-radius: 20px;
+      background: var(--accent);
+      color: white;
+      font-size: 10px;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--paper);
+    }
+
+    main { max-width: 1280px; margin: auto; padding: 0 32px 64px; }
+    .hero {
+      min-height: 430px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(3,5,3,.98) 0%, rgba(3,5,3,.75) 48%, rgba(3,5,3,.12) 100%),
+        url("https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=85") center 48% / cover;
+      background-color: #090a08;
+      display: flex;
+      align-items: center;
+      padding: 64px;
+      color: white;
+      border: 1px solid rgba(210,237,66,.22);
+      box-shadow: 0 24px 80px rgba(0,0,0,.38), inset 0 -50px 100px rgba(210,237,66,.035);
+    }
+    .hero-copy { max-width: 560px; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 11px;
+      font-weight: 700;
+      margin: 0 0 18px;
+    }
+    .hero h1 {
+      font-family: "Oswald", sans-serif;
+      font-size: clamp(48px, 7vw, 82px);
+      line-height: .98;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+      margin: 0 0 22px;
+    }
+    .hero p { font-size: 17px; line-height: 1.6; margin: 0 0 30px; max-width: 430px; }
+    .shop-btn {
+      border: 0;
+      background: var(--accent);
+      color: #090a08;
+      border-radius: 999px;
+      height: 52px;
+      padding: 0 24px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(210,237,66,.10);
+    }
+
+    .shop { padding-top: 64px; }
+    .shop-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+    .shop-heading h2 {
+      font-family: "Oswald", sans-serif;
+      font-size: 38px;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      margin: 0 0 4px;
+    }
+    .shop-heading p { margin: 0; color: var(--muted); }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter {
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      height: 40px;
+      border-radius: 999px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border-color: #454941;
+      color: #f3f4ed;
+      background: #171914;
+    }
+    .filter.active, .filter:hover { background: var(--accent); color: #090a08; border-color: var(--accent); }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .product-card { min-width: 0; }
+    .product-image {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: #1a1d17;
+      border: 1px solid #30342b;
+      position: relative;
+    }
+    .product-image img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .product-card:hover .product-image img { transform: scale(1.035); }
+    .badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--accent);
+      color: #090a08;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .quick-add {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #090a08;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 24px rgba(20,25,21,.12);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: .25s ease;
+    }
+    .product-card:hover .quick-add, .quick-add:focus { opacity: 1; transform: translateY(0); }
+    .product-info { display: flex; justify-content: space-between; gap: 12px; padding: 14px 2px 0; }
+    .product-name { font-weight: 700; margin: 0 0 5px; }
+    .product-category { color: var(--muted); font-size: 13px; margin: 0; }
+    .price { font-weight: 700; white-space: nowrap; }
+
+    .overlay {
+      position: fixed; inset: 0; background: rgba(20,25,21,.28);
+      z-index: 20; opacity: 0; visibility: hidden; transition: .25s ease;
+    }
+    .overlay.open { opacity: 1; visibility: visible; }
+    .cart-panel {
+      position: fixed; z-index: 21; right: 0; top: 0; height: 100%; width: min(430px, 100%);
+      background: #11130f; transform: translateX(100%); transition: .35s ease;
+      display: flex; flex-direction: column;
+    }
+    .cart-panel.open { transform: translateX(0); }
+    .cart-header {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--line);
+      border-color: #34382f;
+    }
+    .cart-header h3 { margin: 0; font-family: "Oswald", sans-serif; }
+    .cart-items { flex: 1; overflow-y: auto; padding: 20px 24px; }
+    .empty-cart { color: var(--muted); text-align: center; margin-top: 70px; }
+    .cart-item { display: grid; grid-template-columns: 76px 1fr auto; gap: 14px; align-items: center; padding: 10px 0 18px; }
+    .cart-item img { width: 76px; height: 88px; object-fit: cover; border-radius: 10px; }
+    .cart-item-name { font-weight: 700; margin-bottom: 5px; }
+    .cart-item-price { color: var(--muted); font-size: 13px; }
+    .qty { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+    .qty button {
+      width: 32px;
+      height: 32px;
+      border: 1px solid #34382f;
+      background: #1a1d17;
+      color: #f3f4ed;
+      border-radius: 50%;
+      font-size: 17px;
+      line-height: 1;
+    }
+    .qty button:hover { background: var(--lime, #d2ed42); color: #090a08; }
+    .qty span { min-width: 18px; text-align: center; font-weight: 700; }
+    .remove {
+      width: 36px;
+      height: 36px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 22px;
+      border-radius: 50%;
+    }
+    .remove:hover { background: #252820; color: #fff; }
+    .cart-footer {
+      border-top: 1px solid var(--line);
+      padding: 20px 24px 24px;
+    }
+    .subtotal { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 16px; }
+    .checkout {
+      width: 100%;
+      height: 54px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #090a08;
+      font-weight: 700;
+    }
+
+    .search-bar {
+      position: fixed; z-index: 22; top: 0; left: 0; width: 100%; background: #11130f;
+      padding: 18px 32px; display: flex; gap: 12px; align-items: center;
+      transform: translateY(-100%); transition: .3s ease;
+      color: #f3f4ed;
+    }
+    .search-bar.open { transform: translateY(0); }
+    .search-bar input {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      height: 44px;
+      font-size: 18px;
+      background: transparent;
+      color: #f3f4ed;
+    }
+
+    @media (min-width: 1500px) {
+      header, main { max-width: 1440px; }
+      .hero { min-height: 520px; }
+      .product-grid { gap: 24px; }
+    }
+    @media (max-width: 900px) {
+      nav { display: none; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero { min-height: 390px; padding: 40px; }
+      .shop-heading { align-items: start; flex-direction: column; }
+    }
+    @media (max-width: 560px) {
+      header { height: 82px; padding: 0 18px; }
+      .brand img { height: 64px; max-width: 230px; }
+      main { padding: 0 14px 40px; }
+      .hero { min-height: 420px; padding: 28px 24px; border-radius: 18px; align-items: end; }
+      .hero h1 { font-size: 48px; }
+      .hero p { font-size: 15px; }
+      .product-grid { gap: 12px; }
+      .quick-add { opacity: 1; transform: none; width: 42px; height: 42px; }
+      .shop { padding-top: 44px; }
+      .shop-heading h2 { font-size: 29px; }
+      .filters { width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+      .filter { flex: 0 0 auto; }
+      .product-info { display: block; }
+      .price { display: block; margin-top: 6px; }
+    }
+    @media (max-width: 380px) {
+      .brand img { height: 56px; max-width: 190px; }
+      .header-actions { gap: 2px; }
+      .icon-btn { width: 38px; height: 38px; }
+      .hero h1 { font-size: 42px; }
+      .shop-heading h2 { font-size: 26px; }
+      .product-grid { grid-template-columns: 1fr 1fr; }
+    }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announcement">Free delivery on orders £75 and over • Gear for the strong</div>
+  <header>
+    <a class="brand" href="#" aria-label="BARYONIX home"><img src="official baryonix logo.png" alt="BARYONIX"></a>
+    <div class="header-actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Open cart">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 9V6a3 3 0 016 0v3"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Strength of the BARYONIX</p>
+        <h1>Unleash your strength.</h1>
+        <p>Built for relentless movement, elite power, and every rep that proves your strength.</p>
+        <a class="shop-btn" href="#shop">Enter the mindset of the BARYONIX <span>→</span></a>
+      </div>
+    </section>
+
+    <section class="shop" id="shop">
+      <div class="shop-heading">
+        <div>
+          <h2>The Essentials</h2>
+          <p id="resultCount">3 training essentials</p>
+        </div>
+        <div class="filters" aria-label="Product filters">
+          <button class="filter active" data-filter="All">All Gear</button>
+          <button class="filter" data-filter="Tee">Premium Tee</button>
+          <button class="filter" data-filter="Hoodie">Training Hoodie</button>
+          <button class="filter" data-filter="Joggers">Extreme Joggers</button>
+        </div>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+  </main>
+
+  <div class="search-bar" id="searchBar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>
+    <input id="searchInput" type="search" placeholder="Search training gear" aria-label="Search products">
+    <button class="icon-btn" id="closeSearch" aria-label="Close search">×</button>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="cart-panel" id="cartPanel" aria-label="Shopping cart">
+    <div class="cart-header">
+      <h3>Your cart</h3>
+      <button class="icon-btn" id="closeCart" aria-label="Close cart">×</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="subtotal"><span>Subtotal</span><span id="subtotal">£0.00</span></div>
+      <div class="subtotal" id="deliveryRow"><span>Delivery</span><span id="delivery">—</span></div>
+      <button class="checkout" id="clearCartBtn" style="background:#252820;color:#f3f4ed;margin-bottom:10px">Clear basket</button>
+      <button class="checkout" id="checkoutBtn">Continue to checkout</button>
+    </div>
+  </aside>
+
+  <script>
+    const products = [
+      { id: 1, name: "Premium Cotton BARYONIX Tee", category: "Tee", price: 22.64, badge: "Bestseller", image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85" },
+      { id: 2, name: "Ultimate Training Hoodie", category: "Hoodie", price: 34.23, badge: "New", image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85" },
+      { id: 3, name: "Extreme Training Joggers", category: "Joggers", price: 27.82, badge: "New", image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?auto=format&fit=crop&w=900&q=85" }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem("baryonixCart") || "[]");
+    let activeFilter = "All";
+
+    const grid = document.getElementById("productGrid");
+    const cartPanel = document.getElementById("cartPanel");
+    const overlay = document.getElementById("overlay");
+
+    function renderProducts(list = products) {
+      grid.innerHTML = list.map(product => `
+        <article class="product-card">
+          <div class="product-image">
+            <a href="${product.id === 1 ? "tee" : product.id === 2 ? "hoodie" : "joggers"} index.html" aria-label="View ${product.name}">
+              <img src="${product.image}" alt="${product.name}" loading="lazy">
+            </a>
+            ${product.badge ? `<span class="badge">${product.badge}</span>` : ""}
+            <button class="quick-add" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+          <div class="product-info">
+            <div><a href="${product.id === 1 ? "tee" : product.id === 2 ? "hoodie" : "joggers"} index.html" style="color:inherit;text-decoration:none"><p class="product-name">${product.name}</p></a><p class="product-category">${product.category}</p></div>
+            <span class="price">£${product.price.toFixed(2)}</span>
+          </div>
+        </article>
+      `).join("");
+      document.getElementById("resultCount").textContent = `${list.length} training ${list.length === 1 ? "essential" : "essentials"}`;
+    }
+
+    function addToCart(id) {
+      const item = cart.find(p => p.id === id && p.size === "M");
+      if (item) item.qty++;
+      else cart.push({ id, size: "M", qty: 1 });
+      saveCart();
+      renderCart();
+      openCart();
+    }
+
+    function saveCart() { localStorage.setItem("baryonixCart", JSON.stringify(cart)); }
+
+    function renderCart() {
+      const container = document.getElementById("cartItems");
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById("cartCount").textContent = count;
+      if (!cart.length) {
+        container.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
+        document.getElementById("checkoutBtn").disabled = true;
+      } else {
+        container.innerHTML = cart.map(cartItem => {
+          const product = products.find(p => p.id === cartItem.id);
+          return `<div class="cart-item">
+            <img src="${product.image}" alt="${product.name}">
+            <div><div class="cart-item-name">${product.name}</div><div class="cart-item-price">£${product.price.toFixed(2)} · Size ${cartItem.size || "M"}</div>
+              <div class="qty"><button onclick="changeQty(${product.id},-1,'${cartItem.size || "M"}')">−</button><span>${cartItem.qty}</span><button onclick="changeQty(${product.id},1,'${cartItem.size || "M"}')">+</button></div>
+            </div>
+            <button class="remove" onclick="removeItem(${product.id}, '${cartItem.size || "M"}')" aria-label="Remove ${product.name}">×</button>
+          </div>`;
+        }).join("");
+        document.getElementById("checkoutBtn").disabled = false;
+      }
+      const total = cart.reduce((sum, item) => {
+        const product = products.find(p => p.id === item.id);
+        return sum + product.price * item.qty;
+      }, 0);
+      document.getElementById("subtotal").textContent = `£${total.toFixed(2)}`;
+
+      // Delivery cost logic
+      const delivery = total === 0 || total >= 75 ? 0 : 5;
+      document.getElementById("delivery").textContent = delivery === 0 ? (total === 0 ? "—" : "Free") : "£5.00";
+      const checkoutBtn = document.getElementById("checkoutBtn");
+      checkoutBtn.textContent = cart.length ? `Checkout · £${(total + delivery).toFixed(2)}` : "Continue to checkout";
+    }
+
+    function changeQty(id, delta, size) {
+      const item = cart.find(p => p.id === id && p.size === size);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty < 1) removeItem(id, size);
+      else saveCart();
+      renderCart();
+    }
+
+    function removeItem(id, size) {
+      cart = cart.filter(p => p.id !== id || p.size !== size);
+      saveCart();
+      renderCart();
+    }
+
+    function openCart() {
+      cartPanel.classList.add("open");
+      overlay.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeCart() {
+      cartPanel.classList.remove("open");
+      overlay.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("cartBtn").addEventListener("click", openCart);
+    document.getElementById("closeCart").addEventListener("click", closeCart);
+    overlay.addEventListener("click", closeCart);
+
+    document.getElementById("clearCartBtn").addEventListener("click", () => {
+      cart = [];
+      saveCart();
+      renderCart();
+    });
+
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      document.getElementById("searchBar").classList.add("open");
+      document.getElementById("searchInput").focus();
+    });
+    document.getElementById("closeSearch").addEventListener("click", () => {
+      document.getElementById("searchBar").classList.remove("open");
+    });
+
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+      if (!cart.length) return;
+      window.location.href = "page2 index.html";
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeCart();
+    });
+
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
