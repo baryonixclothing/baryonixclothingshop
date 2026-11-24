@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, "baryonixclothing.com")));
 
 const secretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = secretKey ? new Stripe(secretKey) : null;
